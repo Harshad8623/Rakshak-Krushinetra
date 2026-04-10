@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<title>Rakshak KrishiNet 2.0 — System Flowchart</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    background: #0a1a0f;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    display: flex; flex-direction: column; align-items: center;
+    padding: 28px 20px; min-height: 100vh;
+  }
+  h1 {
+    font-size: 24px; font-weight: 800; text-align: center; margin-bottom: 4px;
+    background: linear-gradient(135deg,#4ade80,#22c55e 40%,#3b82f6);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+  .sub { font-size:12px;color:#5a7b60;margin-bottom:24px;text-align:center;letter-spacing:.1em;text-transform:uppercase; }
+  .print-btn {
+    position:fixed;top:16px;right:16px;padding:9px 20px;border-radius:8px;font-size:13px;
+    font-weight:700;background:rgba(34,197,94,0.15);border:1px solid rgba(34,197,94,0.4);
+    color:#4ade80;cursor:pointer;font-family:inherit;z-index:10;
+  }
+  .print-btn:hover{background:rgba(34,197,94,0.28);}
+  @media print { body{background:#fff;padding:8px;} .print-btn{display:none;} }
+</style>
+</head>
+<body>
+<button class="print-btn" onclick="window.print()">🖨️ Print / Save PDF</button>
+<h1>🛡️ Rakshak KrishiNet 2.0 — Autonomous Response Flowchart</h1>
+<div class="sub">Detection → Classification → Response → Notification Pipeline</div>
+
+<svg viewBox="0 0 960 1120" xmlns="http://www.w3.org/2000/svg"
+     style="width:100%;max-width:960px;height:auto;display:block">
+  <defs>
+    <marker id="ag" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto"><path d="M0,0 L0,7 L9,3.5z" fill="#22c55e"/></marker>
+    <marker id="ar" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto"><path d="M0,0 L0,7 L9,3.5z" fill="#ef4444"/></marker>
+    <marker id="aa" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto"><path d="M0,0 L0,7 L9,3.5z" fill="#f59e0b"/></marker>
+    <marker id="ab" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto"><path d="M0,0 L0,7 L9,3.5z" fill="#3b82f6"/></marker>
+    <filter id="gn"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <linearGradient id="gStart" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#16a34a"/><stop offset="100%" stop-color="#2563eb"/></linearGradient>
+    <linearGradient id="gEnd"   x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#22c55e"/><stop offset="100%" stop-color="#10b981"/></linearGradient>
+    <linearGradient id="bgCard" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#122a1a" stop-opacity=".97"/><stop offset="100%" stop-color="#0a1a0f" stop-opacity=".97"/></linearGradient>
+  </defs>
+
+  <!-- Card bg -->
+  <rect width="960" height="1120" rx="22" fill="url(#bgCard)" stroke="rgba(45,90,56,0.55)" stroke-width="1.5"/>
+
+  <!-- ─── START oval ────────────────────────────────────────── -->
+  <ellipse cx="480" cy="56" rx="148" ry="36" fill="url(#gStart)" filter="url(#gn)"/>
+  <text x="480" y="52" text-anchor="middle" font-family="Plus Jakarta Sans" font-size="16" font-weight="800" fill="white">🌾 FARM IN OPERATION</text>
+  <text x="480" y="70" text-anchor="middle" font-family="Plus Jakarta Sans" font-size="11" fill="rgba(255,255,255,.75)">24 / 7 autonomous monitoring active</text>
+
+  <!-- arrow -->
+  <line x1="480" y1="92" x2="480" y2="122" stroke="#22c55e" stroke-width="2.5" marker-end="url(#ag)"/>
+
+  <!-- ─── STEP 1: Camera ───────────────────────────────────── -->
+  <rect x="330" y="124" width="300" height="64" rx="14" fill="rgba(34,197,94,0.13)" stroke="rgba(34,197,94,0.55)" stroke-width="1.8"/>
+  <text x="480" y="148" text-anchor="middle" font-family="Plus Jakarta Sans" font-size="14" font-weight="800" fill="#4ade80">📷  Camera Detects Motion</text>
+  <text x="480" y="169" text-anchor="middle" font-family="Plus Jakarta Sans" font-size="12" fill="#9dbfa4">Raspberry Pi Camera v3 — 30 fps — CSI interface</text>
+
+  <line x1="480" y1="188" x2="480" y2="218" stroke="#22c55e" stroke-width="2.5" marker-end="url(#ag)"/>
+
+  <!-- ─── STEP 2: TF.js ────────────────────────────────────── -->
+  <rect x="310" y="220" width="340" height="64" rx="14" fill="rgba(59,130,246,0.13)" stroke="rgba(59,130,246,0.55)" stroke-width="1.8"/>
+  <text x="480" y="244" text-anchor="middle" font-family="Plus Jakarta Sans" font-size="14" font-weight="800" fill="#60a5fa">🤖  TensorFlow.js AI Inference</text>
+  <text x="480" y="265" text-anchor="middle" font-family="Plus Jakarta Sans" font-size="12" fill="#9dbfa4">COCO-SSD model on RPi 4 Edge — runs under 150 ms</text>
+
+  <line x1="480" y1="284" x2="480" y2="314" stroke="#22c55e" stroke-width="2.5" marker-end="url(#ag)"/>
+
+  <!-- ─── DIAMOND 1: Confidence ────────────────────────────── -->
+  <polygon points="480,316 598,360 480,404 362,360" fill="rgba(245,158,11,0.13)" stroke="rgba(245,158,11,0.65)" stroke-width="1.8"/>
+  <text x="480" y="353" text-anchor="middle" font-family="Plus Jakarta Sans" font-size="13" font-weight="800" fill="#fcd34d">Confidence</text>
+  <text x="480" y="372" text-anchor="middle" font-family="Plus Jakarta Sans" font-size="13" font-weight="800" fill="#fcd34d">&gt; 80%?</text>
+
+  <!-- YES label + arrow down -->
+  <text x="493" y="424" font-family="Plus Jakarta Sans" font-size="13" font-weight="700" fill="#22c55e">YES ✓</text>
+  <line x1="480" y1="404" x2="480" y2="434" stroke="#22c55e" stroke-width="2.5" marker-end="url(#ag)"/>
+
+  <!-- NO label + arrow right -->
+  <text x="604" y="355" font-family="Plus Jakarta Sans" font-size="13" font-weight="700" fill="#f87171">NO ✗</text>
+  <line x1="598" y1="360" x2="700" y2="360" stroke="#ef4444" stroke-width="2" marker-end="url(#ar)"/>
+  <rect x="702" y="338" width="210" height="44" rx="10" fill="rgba(239,68,68,0.12)" stroke="rgba(239,68,68,0.45)" stroke-width="1.5"/>
+  <text x="807" y="356" text-anchor="middle" font-family="Plus Jakarta Sans" font-size="13" font-weight="700" fill="#f87171">Log False Positive</text>
+  <text x="807" y="374" text-anchor="middle" font-family="Plus Jakarta Sans" font-size="11" fill="#9dbfa4">Continue monitoring</text>
+
+  <!-- ─── DIAMOND 2: Classify ──────────────────────────────── -->
+  <polygon points="480,436 612,480 480,524 348,480" fill="rgba(139,92,246,0.13)" stroke="rgba(139,92,246,0.65)" stroke-width="1.8"/>
+  <text x="480" y="473" text-anchor="middle" font-family="Plus Jakarta Sans" font-size="13" font-weight="800" fill="#a78bfa">Classify</text>
+  <text x="480" y="493" text-anchor="middle" font-family="Plus Jakarta Sans" font-size="13" font-weight="800" fill="#a78bfa">Threat Type</text>
+
+  <!-- Branch labels -->
+  <text x="55"  y="476" font-family="Plus Jakarta Sans" font-size="13" font-weight="800" fill="#f87171">HUMAN 👤</text>
+  <text x="490" y="542" font-family="Plus Jakarta Sans" font-size="13" font-weight="800" fill="#fcd34d">ANIMAL 🐗</text>
+  <text x="618" y="476" font-family="Plus Jakarta Sans" font-size="13" font-weight="800" fill="#60a5fa">VEHICLE 🚗</text>
+
+  <!-- HUMAN → left -->
+  <line x1="348" y1="480" x2="230" y2="480" stroke="#ef4444" stroke-width="2" marker-end="url(#ar)"/>
+  <rect x="44" y="455" width="184" height="50" rx="11" fill="rgba(239,68,68,0.13)" stroke="rgba(239,68,68,0.5)" stroke-width="1.5"/>
+  <text x="136" y="476" text-anchor="middle" font-family="Plus Jakarta Sans" font-size="13" font-weight="800" fill="#f87171">🚨 LOCKDOWN</text>
+  <text x="136" y="494" text-anchor="middle" font-family="Plus Jakarta Sans" font-size="11" fill="#9dbfa4">Police + all cameras on</text>
+
+  <!-- VEHICLE → right -->
+  <line x1="612" y1="480" x2="714" y2="480" stroke="#3b82f6" stroke-width="2" marker-end="url(#ab)"/>
+  <rect x="716" y="455" width="196" height="50" rx="11" fill="rgba(59,130,246,0.13)" stroke="rgba(59,130,246,0.5)" stroke-width="1.5"/>
+  <text x="814" y="476" text-anchor="middle" font-family="Plus Jakarta Sans" font-size="13" font-weight="800" fill="#60a5fa">🚨 ENTRY ALERT</text>
+  <text x="814" y="494" text-anchor="middle" font-family="Plus Jakarta Sans" font-size="11" fill="#9dbfa4">Gate camera + admin notify</text>
+
+  <!-- ANIMAL → down -->
+  <line x1="480" y1="524" x2="480" y2="554" stroke="#f59e0b" stroke-width="2.5" marker-end="url(#aa)"/>
+
+  <!-- ─── STEP 3: Deterrent ─────────────────────────────────── -->
+  <rect x="310" y="556" width="340" height="64" rx="14" fill="rgba(245,158,11,0.13)" stroke="rgba(245,158,11,0.55)" stroke-width="1.8"/>
+  <text x="480" y="581" text-anchor="middle" font-family="Plus Jakarta Sans" font-size="14" font-weight="800" fill="#fcd34d">🔊  Activate Smart Deterrent</text>
+  <text x="480" y="602" text-anchor="middle" font-family="Plus Jakarta Sans" font-size="12" fill="#9dbfa4">Ultrasonic emitter + LED spotlight — under 200 ms</text>
+
+  <!-- Merge arrows: Human & Vehicle converge to Drone box -->
+  <!-- Human: down then right -->
+  <line x1="136" y1="505" x2="136" y2="650" stroke="#ef4444" stroke-width="1.8" stroke-dasharray="6,4"/>
+  <line x1="136" y1="650" x2="420" y2="650" stroke="#ef4444" stroke-width="1.8" stroke-dasharray="6,4" marker-end="url(#ag)"/>
+  <!-- Vehicle: down then left -->
+  <line x1="814" y1="505" x2="814" y2="650" stroke="#3b82f6" stroke-width="1.8" stroke-dasharray="6,4"/>
+  <line x1="814" y1="650" x2="542" y2="650" stroke="#3b82f6" stroke-width="1.8" stroke-dasharray="6,4" marker-end="url(#ag)"/>
+  <!-- Animal: continue down -->
+  <line x1="480" y1="620" x2="480" y2="650" stroke="#f59e0b" stroke-width="2.5" marker-end="url(#ag)"/>
+
+  <!-- ─── STEP 4: Drone ─────────────────────────────────────── -->
+  <rect x="310" y="652" width="340" height="64" rx="14" fill="rgba(59,130,246,0.13)" stroke="rgba(59,130,246,0.55)" stroke-width="1.8"/>
+  <text x="480" y="677" text-anchor="middle" font-family="Plus Jakarta Sans" font-size="14" font-weight="800" fill="#60a5fa">🚁  Deploy Drone to Threat Zone</text>
+  <text x="480" y="698" text-anchor="middle" font-family="Plus Jakarta Sans" font-size="12" fill="#9dbfa4">MAVLink → Pixhawk 4 → GPS waypoint navigation</text>
+
+  <line x1="480" y1="716" x2="480" y2="746" stroke="#22c55e" stroke-width="2.5" marker-end="url(#ag)"/>
+
+  <!-- ─── STEP 5: Notify Farmer ─────────────────────────────── -->
+  <rect x="310" y="748" width="340" height="64" rx="14" fill="rgba(16,185,129,0.13)" stroke="rgba(16,185,129,0.55)" stroke-width="1.8"/>
+  <text x="480" y="773" text-anchor="middle" font-family="Plus Jakarta Sans" font-size="14" font-weight="800" fill="#34d399">📱  Alert Farmer — under 5 seconds</text>
+  <text x="480" y="794" text-anchor="middle" font-family="Plus Jakarta Sans" font-size="12" fill="#9dbfa4">SMS + Telegram Bot — Zone name, type, confidence %</text>
+
+  <line x1="480" y1="812" x2="480" y2="842" stroke="#22c55e" stroke-width="2.5" marker-end="url(#ag)"/>
+
+  <!-- ─── STEP 6: Log + Gemini ──────────────────────────────── -->
+  <rect x="310" y="844" width="340" height="64" rx="14" fill="rgba(139,92,246,0.13)" stroke="rgba(139,92,246,0.55)" stroke-width="1.8"/>
+  <text x="480" y="869" text-anchor="middle" font-family="Plus Jakarta Sans" font-size="14" font-weight="800" fill="#a78bfa">📊  Log Event + Gemini AI Insight</text>
+  <text x="480" y="890" text-anchor="middle" font-family="Plus Jakarta Sans" font-size="12" fill="#9dbfa4">Store alert + AI generates next patrol recommendation</text>
+
+  <line x1="480" y1="908" x2="480" y2="938" stroke="#22c55e" stroke-width="2.5" marker-end="url(#ag)"/>
+
+  <!-- ─── DIAMOND 3: Threat Cleared? ───────────────────────── -->
+  <polygon points="480,940 590,978 480,1016 370,978" fill="rgba(34,197,94,0.12)" stroke="rgba(34,197,94,0.6)" stroke-width="1.8"/>
+  <text x="480" y="971" text-anchor="middle" font-family="Plus Jakarta Sans" font-size="13" font-weight="800" fill="#4ade80">Threat</text>
+  <text x="480" y="989" text-anchor="middle" font-family="Plus Jakarta Sans" font-size="13" font-weight="800" fill="#4ade80">Cleared?</text>
+
+  <!-- YES down -->
+  <text x="493" y="1034" font-family="Plus Jakarta Sans" font-size="13" font-weight="700" fill="#22c55e">YES ✓</text>
+  <line x1="480" y1="1016" x2="480" y2="1048" stroke="#22c55e" stroke-width="2.5" marker-end="url(#ag)"/>
+
+  <!-- NO → loop left → Drone -->
+  <text x="196" y="973" font-family="Plus Jakarta Sans" font-size="13" font-weight="700" fill="#f87171">NO — Escalate ✗</text>
+  <line x1="370" y1="978"  x2="264" y2="978"  stroke="#ef4444" stroke-width="1.8" stroke-dasharray="6,4"/>
+  <line x1="264" y1="978"  x2="264" y2="684"  stroke="#ef4444" stroke-width="1.8" stroke-dasharray="6,4"/>
+  <line x1="264" y1="684"  x2="310" y2="684"  stroke="#ef4444" stroke-width="1.8" stroke-dasharray="6,4" marker-end="url(#ar)"/>
+  <text x="242" y="835" text-anchor="middle" font-family="Plus Jakarta Sans" font-size="11" fill="#f87171" transform="rotate(-90 242 835)">Re-deploy Drone</text>
+
+  <!-- ─── END oval ──────────────────────────────────────────── -->
+  <ellipse cx="480" cy="1082" rx="164" ry="38" fill="url(#gEnd)" filter="url(#gn)"/>
+  <text x="480" y="1077" text-anchor="middle" font-family="Plus Jakarta Sans" font-size="15" font-weight="800" fill="white">✅  ALL CLEAR — Farm Secured</text>
+  <text x="480" y="1096" text-anchor="middle" font-family="Plus Jakarta Sans" font-size="11" fill="rgba(255,255,255,.8)">Drone returns · Alert resolved · Self-learning updated</text>
+
+  <!-- ─── LEGEND (bottom-left) ──────────────────────────────── -->
+  <rect x="30" y="1032" width="232" height="72" rx="12" fill="rgba(18,42,26,0.85)" stroke="rgba(45,90,56,0.5)" stroke-width="1"/>
+  <text x="146" y="1050" text-anchor="middle" font-family="Plus Jakarta Sans" font-size="11" font-weight="700" fill="#5a7b60" letter-spacing="1">LEGEND</text>
+  <rect x="42" y="1056" width="22" height="14" rx="4" fill="rgba(34,197,94,0.13)" stroke="rgba(34,197,94,0.5)" stroke-width="1"/>
+  <text x="72" y="1067" font-family="Plus Jakarta Sans" font-size="12" fill="#9dbfa4">Process Step</text>
+  <polygon points="160,1059 178,1066 160,1073 142,1066" fill="rgba(245,158,11,0.13)" stroke="rgba(245,158,11,0.6)" stroke-width="1"/>
+  <text x="184" y="1068" font-family="Plus Jakarta Sans" font-size="12" fill="#9dbfa4">Decision</text>
+  <line x1="42" y1="1085" x2="64" y2="1085" stroke="#22c55e" stroke-width="2" marker-end="url(#ag)"/>
+  <text x="72" y="1089" font-family="Plus Jakarta Sans" font-size="12" fill="#9dbfa4">Normal flow</text>
+  <line x1="148" y1="1085" x2="170" y2="1085" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#ar)"/>
+  <text x="178" y="1089" font-family="Plus Jakarta Sans" font-size="12" fill="#9dbfa4">Exception</text>
+
+  <!-- ─── KEY TIMINGS (bottom-right) ─────────────────────────── -->
+  <rect x="698" y="1032" width="232" height="72" rx="12" fill="rgba(18,42,26,0.85)" stroke="rgba(45,90,56,0.5)" stroke-width="1"/>
+  <text x="814" y="1050" text-anchor="middle" font-family="Plus Jakarta Sans" font-size="11" font-weight="700" fill="#5a7b60" letter-spacing="1">KEY TIMINGS</text>
+  <text x="708"  y="1067" font-family="Plus Jakarta Sans" font-size="12" fill="#9dbfa4">⚡ AI Inference</text>
+  <text x="920"  y="1067" text-anchor="end" font-family="Plus Jakarta Sans" font-size="12" font-weight="700" fill="#fcd34d">&lt; 150 ms</text>
+  <text x="708"  y="1082" font-family="Plus Jakarta Sans" font-size="12" fill="#9dbfa4">🔊 Deterrent Active</text>
+  <text x="920"  y="1082" text-anchor="end" font-family="Plus Jakarta Sans" font-size="12" font-weight="700" fill="#fcd34d">&lt; 200 ms</text>
+  <text x="708"  y="1097" font-family="Plus Jakarta Sans" font-size="12" fill="#9dbfa4">🚁 Drone Deploy</text>
+  <text x="920"  y="1097" text-anchor="end" font-family="Plus Jakarta Sans" font-size="12" font-weight="700" fill="#22c55e">&lt; 3 sec</text>
+
+  <!-- watermark -->
+  <text x="480" y="1115" text-anchor="middle" font-family="Plus Jakarta Sans" font-size="10" fill="rgba(90,123,96,0.45)">Rakshak KrishiNet 2.0 · AI-Powered Farm Defense System · Team Rakshak 2026</text>
+</svg>
+</body>
+</html>

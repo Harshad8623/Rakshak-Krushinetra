@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rakshak KrishiNetra - Documentary Video Script</title>
+    <style>
+        :root {
+            --primary: #0f172a;
+            --accent: #22c55e;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: var(--primary);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        /* Video Stage */
+        #video-stage {
+            width: 100vw;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: #000;
+            z-index: 10;
+            transition: opacity 1s ease-in-out;
+            perspective: 1000px;
+        }
+
+        .scene {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: all 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            box-sizing: border-box;
+            background-size: cover;
+            background-position: center;
+            background-blend-mode: overlay;
+            background-color: rgba(0,0,0,0.7);
+            transform: scale(1.05) translateZ(-50px);
+            pointer-events: none;
+        }
+
+        .scene.active {
+            opacity: 1;
+            transform: scale(1) translateZ(0);
+            pointer-events: auto;
+        }
+
+        .scene.exit {
+            opacity: 0;
+            transform: scale(0.95) translateZ(50px);
+        }
+
+        /* Narration Overlay */
+        .narration-box {
+            position: absolute;
+            bottom: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            max-width: 800px;
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(10px);
+            border-left: 4px solid var(--accent);
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            transform: translate(-50%, 20px);
+            transition: all 1s ease 0.5s;
+        }
+
+        .scene.active .narration-box {
+            opacity: 1;
+            transform: translate(-50%, 0);
+        }
+
+        .narration-text {
+            font-size: 1.5rem;
+            line-height: 1.6;
+            font-style: italic;
+            color: #e2e8f0;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+
+        /* Visual Elements & Animations */
+        .visual-container {
+            width: 80%;
+            height: 50%;
+            margin-bottom: 25%; /* Space for narration */
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .text-overlay {
+            font-size: 3rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.8);
+            opacity: 0;
+            transform: scale(0.9);
+            transition: all 1s ease 1s;
+        }
+
+        .scene.active .text-overlay {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Scene Specifics */
+        #scene-opening {
+            background-image: url('https://images.unsplash.com/photo-1592982537447-6f2ab0c9fb20?q=80&w=2000&auto=format&fit=crop');
+        }
+        
+        #scene-problem {
+            background-image: url('https://images.unsplash.com/photo-1534073133331-c4f62a71cbba?q=80&w=2000&auto=format&fit=crop');
+        }
+
+        #scene-solution {
+            background-image: url('https://images.unsplash.com/photo-1579829366248-204fe8413f31?q=80&w=2000&auto=format&fit=crop');
+            background-color: rgba(0,0,0,0.8);
+        }
+        
+        #scene-impact {
+            background-image: url('https://images.unsplash.com/photo-1605000797499-95a51c5269ae?q=80&w=2000&auto=format&fit=crop');
+        }
+
+        #scene-vision {
+            background-image: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2000&auto=format&fit=crop');
+        }
+
+        /* Animated Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            width: 100%;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s ease 1.2s;
+        }
+
+        .scene.active .stats-grid {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 2rem;
+            border-radius: 12px;
+            backdrop-filter: blur(5px);
+        }
+
+        .stat-number {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: #ef4444; /* Red for problem */
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-number.positive {
+            color: var(--accent); /* Green for solution */
+        }
+
+        /* Keyword Highlights */
+        .keywords-container {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .keyword {
+            background: transparent;
+            border: 2px solid var(--accent);
+            color: var(--accent);
+            padding: 0.75rem 2rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+            border-radius: 30px;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.5s ease;
+        }
+
+        .scene.active .keyword:nth-child(1) { transition-delay: 1.2s; opacity: 1; transform: scale(1); }
+        .scene.active .keyword:nth-child(2) { transition-delay: 1.5s; opacity: 1; transform: scale(1); }
+        .scene.active .keyword:nth-child(3) { transition-delay: 1.8s; opacity: 1; transform: scale(1); }
+
+        /* Drone Animation Element */
+        .drone-wrapper {
+            position: absolute;
+            font-size: 5rem;
+            opacity: 0;
+            transform: translate(-200px, 100px) rotate(-15deg);
+            transition: all 2s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .scene.active .drone-wrapper {
+            opacity: 1;
+            transform: translate(0, 0) rotate(0);
+            animation: hover 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes hover {
+            0% { transform: translateY(0px) rotate(0deg); }
+            100% { transform: translateY(-20px) rotate(2deg); }
+        }
+
+        /* Flow Animation */
+        .flow-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            opacity: 0;
+            transition: all 1s ease 1s;
+        }
+        
+        .scene.active .flow-container {
+            opacity: 1;
+        }
+
+        .flow-step {
+            background: rgba(34, 197, 94, 0.2);
+            border: 1px solid var(--accent);
+            padding: 1rem;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        .flow-arrow {
+            font-size: 2rem;
+            color: var(--accent);
+            animation: pulse-right 1s infinite alternate;
+        }
+
+        @keyframes pulse-right {
+            from { transform: translateX(0); opacity: 0.5; }
+            to { transform: translateX(10px); opacity: 1; }
+        }
+
+        /* Controls */
+        #controls {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 100;
+            display: flex;
+            gap: 1rem;
+            background: rgba(0,0,0,0.5);
+            padding: 1rem;
+            border-radius: 30px;
+            backdrop-filter: blur(5px);
+        }
+
+        button {
+            background: var(--text-main);
+            color: var(--primary);
+            border: none;
+            padding: 0.5rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        button:hover {
+            background: var(--accent);
+            color: white;
+            transform: scale(1.05);
+        }
+        
+        button:disabled {
+            background: #cbd5e1;
+            color: #64748b;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .progress-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            height: 4px;
+            background: var(--accent);
+            width: 0%;
+            z-index: 100;
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="progress-bar" id="progress"></div>
+
+    <div id="video-stage">
+        
+        <!-- Scene 1: Opening -->
+        <div class="scene active" id="scene-opening">
+            <div class="visual-container">
+                <div class="text-overlay">80+ million farmers<br><span style="color:#ef4444; font-size: 1.5rem;">lack real-time farm protection</span></div>
+            </div>
+            <div class="narration-box">
+                <div class="narration-text">"India feeds over 1.4 billion people... But the ones who feed us—the farmers—are often the most vulnerable."</div>
+            </div>
+        </div>
+
+        <!-- Scene 2: Problem Setup -->
+        <div class="scene" id="scene-problem">
+            <div class="visual-container" style="flex-direction: column;">
+                <h2 style="font-size: 2rem; margin-bottom: 2rem;">CRITICAL VULNERABILITIES</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">₹2L Cr</div>
+                        <div>Annual Losses</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">30%</div>
+                        <div>Crop Damage</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">8<span style="font-size: 2rem;">hr</span></div>
+                        <div>Response Time</div>
+                    </div>
+                </div>
+            </div>
+            <div class="narration-box">
+                <div class="narration-text">"Every year, crops worth thousands of crores are lost to wildlife intrusion. Farmers rely on manual guarding or basic CCTV—solutions that are costly, ineffective, or dangerous."</div>
+            </div>
+        </div>
+
+        <!-- Scene 3: Solution Intro -->
+        <div class="scene" id="scene-solution">
+            <div class="visual-container" style="flex-direction: column;">
+                <div class="drone-wrapper">🚁</div>
+                <h1 style="font-size: 4rem; margin-bottom: 0; color: var(--accent);">Rakshak KrishiNetra</h1>
+                <h3 style="font-size: 1.5rem; font-weight: normal; color: #cbd5e1; margin-top: 0.5rem;">By TEAM AGRONIQUE</h3>
+                <div class="keywords-container">
+                    <div class="keyword">AI-Powered</div>
+                    <div class="keyword">Autonomous</div>
+                    <div class="keyword">Rural-Ready</div>
+                </div>
+            </div>
+            <div class="narration-box">
+                <div class="narration-text">"Introducing Rakshak KrishiNetra—an AI-powered autonomous drone system designed to protect farms, monitor crops, and empower farmers."</div>
+            </div>
+        </div>
+
+        <!-- Scene 4: How it works -->
+        <div class="scene" id="scene-how">
+            <div class="visual-container" style="flex-direction: column;">
+                <div class="flow-container">
+                    <div class="flow-step">📷 Camera Feed</div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step">🧠 Edge AI Detection</div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step">📱 Instant SMS Alert</div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step">🚁 Drone Launch</div>
+                </div>
+                <div class="text-overlay" style="margin-top: 3rem; font-size: 2rem; color: var(--accent);">Detection to Response in &lt;3 seconds</div>
+            </div>
+            <div class="narration-box">
+                <div class="narration-text">"The system uses edge AI to detect threats in real-time, even offline. Intrusion triggers smart deterrents and deploys the drone. The farmer receives an alert instantly."</div>
+            </div>
+        </div>
+
+        <!-- Scene 5: Advanced Features -->
+        <div class="scene" id="scene-advanced">
+            <div class="visual-container" style="flex-direction: column;">
+                <div class="text-overlay" style="font-size: 2.5rem; margin-bottom: 2rem;">Beyond Protection</div>
+                <div class="stats-grid" style="grid-template-columns: 1fr; max-width: 600px; gap: 1rem;">
+                    <div class="stat-card" style="display: flex; align-items: center; gap: 2rem; padding: 1rem 2rem;">
+                        <span style="font-size: 2rem;">🌡️</span>
+                        <div style="font-size: 1.2rem; font-weight: bold; text-align: left;">Crop Health Heatmapping</div>
+                    </div>
+                    <div class="stat-card" style="display: flex; align-items: center; gap: 2rem; padding: 1rem 2rem;">
+                        <span style="font-size: 2rem;">🧠</span>
+                        <div style="font-size: 1.2rem; font-weight: bold; text-align: left;">Continuous AI Learning System</div>
+                    </div>
+                    <div class="stat-card" style="display: flex; align-items: center; gap: 2rem; padding: 1rem 2rem;">
+                        <span style="font-size: 2rem;">🎯</span>
+                        <div style="font-size: 1.2rem; font-weight: bold; text-align: left;">Massive Reduction in False Positives</div>
+                    </div>
+                </div>
+            </div>
+            <div class="narration-box">
+                <div class="narration-text">"It goes beyond protection to monitor crop health—detecting diseases early. With its self-learning system, it continuously improves accuracy over time."</div>
+            </div>
+        </div>
+
+        <!-- Scene 6: Impact -->
+        <div class="scene" id="scene-impact">
+             <div class="visual-container" style="flex-direction: column;">
+                <h2 style="font-size: 2.5rem; margin-bottom: 2rem; text-shadow: 0 4px 10px rgba(0,0,0,1);">REAL WORLD IMPACT</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number positive">85%</div>
+                        <div>Loss Prevention</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number positive">₹45K</div>
+                        <div>Farmer Savings</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number positive">94%</div>
+                        <div>Deterrence Rate</div>
+                    </div>
+                </div>
+            </div>
+            <div class="narration-box">
+                <div class="narration-text">"The impact is real. Up to 85% reduction in crop loss, securing ₹45,000 annual savings per farmer. A system built specifically for rural, low-network reality."</div>
+            </div>
+        </div>
+
+        <!-- Scene 7: Future & Closing -->
+        <div class="scene" id="scene-vision">
+            <div class="visual-container" style="flex-direction: column;">
+                <div style="font-size: 4rem; margin-bottom: 1rem;">🌍</div>
+                <div class="keywords-container" style="margin-top: 0; margin-bottom: 2rem;">
+                    <div class="keyword" style="border-color: white; color: white;">Scalable</div>
+                    <div class="keyword" style="border-color: white; color: white;">Intelligent</div>
+                    <div class="keyword" style="border-color: white; color: white;">Sustainable</div>
+                </div>
+                <h1 style="font-size: 3rem; color: var(--accent); text-shadow: 0 4px 20px rgba(0,0,0,1);">Protecting every grain.<br>Empowering every farmer.</h1>
+            </div>
+            <div class="narration-box">
+                <div class="narration-text">"Our vision: a full-scale smart farming assistant. Because this isn't just about technology—it's about protecting livelihoods and securing the future of agriculture."</div>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="controls">
+        <button id="btn-prev" disabled>Previous</button>
+        <button id="btn-play">Auto-Play</button>
+        <button id="btn-next">Next Scene</button>
+    </div>
+
+    <script>
+        const scenes = document.querySelectorAll('.scene');
+        const progressBar = document.getElementById('progress');
+        const btnPrev = document.getElementById('btn-prev');
+        const btnNext = document.getElementById('btn-next');
+        const btnPlay = document.getElementById('btn-play');
+        
+        let currentScene = 0;
+        let isPlaying = false;
+        let playInterval;
+        const SCENE_DURATION = 6000;
+
+        function updateScenes() {
+            scenes.forEach((scene, index) => {
+                // Reset all classes first
+                scene.classList.remove('active', 'exit');
+                
+                if (index === currentScene) {
+                    // Activate current scene
+                    // Slight delay to allow display block to apply if needed, though opacity handles it here
+                    setTimeout(() => scene.classList.add('active'), 50);
+                } else if (index < currentScene) {
+                    // Scenes before current should exit up
+                    scene.classList.add('exit');
+                }
+                // Scenes after current just stay hidden without .active or .exit (initial state)
+            });
+
+            // Update Buttons
+            btnPrev.disabled = currentScene === 0;
+            btnNext.disabled = currentScene === scenes.length - 1;
+            
+            if (currentScene === scenes.length - 1 && isPlaying) {
+                togglePlay(); // Auto-stop at the end
+                btnPlay.textContent = 'Restart';
+            } else if (!isPlaying) {
+                btnPlay.textContent = currentScene === scenes.length - 1 ? 'Restart' : 'Auto-Play';
+            }
+
+            // Update Progress bar
+            progressBar.style.width = `${(currentScene / (scenes.length - 1)) * 100}%`;
+        }
+
+        function nextScene() {
+            if (currentScene < scenes.length - 1) {
+                currentScene++;
+                updateScenes();
+            }
+        }
+
+        function prevScene() {
+            if (currentScene > 0) {
+                currentScene--;
+                updateScenes();
+            }
+        }
+
+        function togglePlay() {
+            isPlaying = !isPlaying;
+            
+            if (isPlaying) {
+                if (currentScene === scenes.length - 1) {
+                    currentScene = 0; // Restart from beginning if at the end
+                    updateScenes();
+                }
+                btnPlay.textContent = 'Pause';
+                btnPlay.style.background = 'var(--accent)';
+                btnPlay.style.color = 'white';
+                playInterval = setInterval(nextScene, SCENE_DURATION);
+            } else {
+                btnPlay.textContent = 'Auto-Play';
+                btnPlay.style.background = 'var(--text-main)';
+                btnPlay.style.color = 'var(--primary)';
+                clearInterval(playInterval);
+            }
+        }
+
+        btnNext.addEventListener('click', () => {
+            if (isPlaying) togglePlay(); 
+            nextScene();
+        });
+        
+        btnPrev.addEventListener('click', () => {
+            if (isPlaying) togglePlay();
+            prevScene();
+        });
+        
+        btnPlay.addEventListener('click', togglePlay);
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                if (isPlaying) togglePlay();
+                nextScene();
+            } else if (e.key === 'ArrowLeft') {
+                if (isPlaying) togglePlay();
+                prevScene();
+            }
+        });
+
+        // Initialize first scene
+        updateScenes();
+    </script>
+</body>
+</html>
