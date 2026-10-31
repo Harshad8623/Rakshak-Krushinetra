@@ -1,73 +1,28 @@
-# React + TypeScript + Vite
+# Rakshak Krushinetra — Agri-Tech Web Prototype
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React/TypeScript agricultural technology prototype. The repository includes interactive web pages, presentation materials and TensorFlow.js-related dependencies.
 
-Currently, two official plugins are available:
+## Tech stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+React, TypeScript, Vite, Tailwind CSS and TensorFlow.js.
 
-## React Compiler
+## Run locally
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Use `npm run build` to generate a production build.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Important security note
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Do not place private Gemini or other provider API keys in variables prefixed with `VITE_`. Those variables are exposed to browser clients. The original committed environment file was removed from the current branch, but historical Git commits may still contain its contents. Rotate any real credentials and route private API calls through a secure backend.
+
+## Project status
+
+Student prototype, not a validated crop-disease or farm-safety decision system. Confirm any agricultural advice with reliable local experts.
+
+**Related:** [Dharti Rakshak](https://github.com/Harshad8623/AI-Based-Organic-Farming-Advisary-System-and-Marketplace.) — separate farming advisory and marketplace application.
+
+**Author:** [Harshad Madhav Dhuppe](https://github.com/Harshad8623)
